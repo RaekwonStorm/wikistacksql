@@ -29,6 +29,19 @@ var Page = db.define('page', {
   status: {
     type: Sequelize.ENUM('open', 'closed')
   }
+}, {
+  hooks: {
+    beforeValidate: function(page){
+      if(page.title){
+          var str = page.title;
+          str = str.toLowerCase();
+          str = str.replace(/\s+/g, '_');
+          page.urlTitle = str;
+      } else {
+          page.urlTitle = Math.floor(Math.random() * 1000000);
+      }
+    }
+  }
 });
 
 var User = db.define('user', {

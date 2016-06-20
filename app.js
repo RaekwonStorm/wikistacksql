@@ -9,7 +9,7 @@ var Models = require('./models');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.engine('html', swig.renderFile);
-app.set('view engine','html')
+app.set('view engine','html');
 app.set('views',__dirname+'/views/');
 swig.setDefaults({ cache: false });
 

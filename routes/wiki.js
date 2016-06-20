@@ -21,11 +21,20 @@ router.post('/', function(req, res){
     email: req.body.email
   });
 
-  page.save();
+  page.save()
+    .then(function(data){
+      res.redirect('/wiki/' + data.urlTitle);
+    })
+    .catch(function(err){
+      console.error(err);
+    });
   user.save();
 
-  res.redirect('/');
 
+});
+
+router.get('/:url/', function(req, res){
+  res.send('we made it')
 });
 
 router.get('/add/', function(req, res){
