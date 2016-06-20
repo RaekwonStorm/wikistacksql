@@ -6,6 +6,7 @@ var wikiRouter = require('./routes/wiki');
 var swig = require('swig');
 var Models = require('./models');
 
+app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.engine('html', swig.renderFile);
@@ -20,10 +21,9 @@ app.use("/", function (req, res, next) {
   next();
 });
 
-app.use(express.static('public'));
 
 app.use("/wiki", wikiRouter);
 
-Models.Page.sync({force: true});
+Models.Page.sync();
 Models.User.sync();
 app.listen(3000);

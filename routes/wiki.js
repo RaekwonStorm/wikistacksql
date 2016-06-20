@@ -6,7 +6,10 @@ var User = models.User;
 
 
 router.get('/', function(req, res){
-  res.redirect('/');
+  Page.findAll().then(function (data) {
+    console.log(dataVals(data));
+    res.render('index', {pages: dataVals(data)})
+  })
 });
 
 router.post('/', function(req, res){
@@ -23,24 +26,38 @@ router.post('/', function(req, res){
 
   page.save()
     .then(function(data){
-      res.redirect('/wiki/' + data.urlTitle);
+      res.redirect(data.route);
     })
     .catch(function(err){
       console.error(err);
     });
   user.save();
-
-
-});
-
-router.get('/:url/', function(req, res){
-  res.send('we made it')
 });
 
 router.get('/add/', function(req, res){
   res.render('addpage');
 });
 
+router.get('/:url/', function(req, res){
+  Page.findAll( {
+    where: {
+      urlTitle: req.params.url
+    }
+  }).then(function (data) {
+    res.render('wikipage', {page: data[0].dataValues});
+  })
+});
+
+
 
 
 module.exports = router;
+
+
+function dataVals (arr) {
+  var resultArr = [];
+  arr.forEach(function (index) {
+    resultArr.push(index.dataValues);
+  });
+  return resultArr;
+}
