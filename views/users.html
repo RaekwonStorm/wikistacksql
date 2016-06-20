@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block content %}
+  <h3>{{title}}</h3>
+  <hr>
+  <ul class="list-unstyled">
+    <!-- PLACEHOLDER LIST OF PAGES -->
+    {% if users %}
+      {% for user in users %}
+        <h1><a href="/wiki/user/{{user.id}}">{{user.name}}</a></h1>
+      {% endfor %}
+    {% elseif posts %}
+      {% for post in posts %}
+        <h1><a href="/wiki/{{post.urlTitle}}">{{post.title}}</a></h1>
+      {% endfor %}
+    {% endif %}
+
+  </ul>
+{% endblock %}
