@@ -22,7 +22,7 @@ app.use("/", function (req, res, next) {
 });
 
 
-app.use("/wiki", wikiRouter);
+app.use("/", wikiRouter);
 
 Models.Page.sync();
 Models.User.sync();
