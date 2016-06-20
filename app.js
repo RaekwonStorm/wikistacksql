@@ -1,9 +1,10 @@
-'use strict';
+// 'use strict';
 var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
-var routes = require('./routes');
+var wikiRouter = require('./routes/wiki');
 var swig = require('swig');
+var Models = require('./models');
 
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -21,6 +22,8 @@ app.use("/", function (req, res, next) {
 
 app.use(express.static('public'));
 
-app.use("/", routes);
+app.use("/wiki", wikiRouter);
 
+Models.Page.sync({force: true});
+Models.User.sync();
 app.listen(3000);
